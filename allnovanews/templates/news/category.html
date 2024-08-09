@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}The Potomac Worker{% endblock %}
+
+{% block content %}
+<script>
+    var makeUrl = function (title) {
+        return '/articles/' + title.toLowerCase().replace(' ', '-');
+    };
+
+</script>
+<h1 class="text-center">Category: {{ category.name }}</h1>
+<div class="container my-4">
+    <div class="row">
+        {% for article in articles %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-secondary">
+                <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
+                <a id="{{article.pk}}" style="text-decoration: none;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">
+                            <small class="text-muted">By {{ article.author }}</small><br>
+                            <small class="text-muted">Category: {{ article.category.name }}</small><br>
+                            <small class="text-muted">Published on: {{ article.created_at|date:"F j, Y" }}</small>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        <script>
+            var makeUrl = function (title) {
+                return '/articles/' + title.toLowerCase().replaceAll(' ', '-');
+            };
+            {% for article in articles %}
+            var card = document.getElementById("{{article.pk}}");
+            card.href = makeUrl("{{ article.title }}");
+            {% endfor %}
+        </script>
+    </div>
+</div>
+
+
+{% endblock %}

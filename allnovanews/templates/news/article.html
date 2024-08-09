@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ article.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        .article-title {
+            font-family: 'Anton', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+        }
+        .article-body {
+            font-family: 'Martian Mono', monospace;
+            color: white;
+            font-size: 1rem;
+        }
+        .article-cover {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+        .article-author {
+            font-family: 'Martian Mono', monospace;
+            font-weight: 800;
+            color: white;
+            font-size: 1.5rem;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="article-title">{{ article.title }}</h1>
+    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="article-cover">
+    <h3 class="article-author">By {{ article.author }}</h3><span> on {{ article.created_at }}</span>
+    <br></br>
+    <div class="article-body">
+        <p>{{ article.body|linebreaksbr}}</p>
+    </div>
+    <br></br>
+    <h4>Tags</h4>
+    {% for tag in article.tags.all %}
+        <a href="/tags/{{ tag.name }}" class="btn btn-secondary">
+            <i class="bi bi-tag"></i> {{ tag.name }}
+        </a>
+    {% endfor %}
+    <br></br>
+    <a href="/" class="btn btn-primary">Back to Home</a>
+</div>
+</body>
+</html>
+{% endblock %}
